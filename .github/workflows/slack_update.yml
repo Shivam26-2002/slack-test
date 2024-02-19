@@ -5,8 +5,7 @@ on:
       
 jobs:
   Slack_Update_Status:
-    runs-on:
-      group: ADS
+    runs-on: ubuntu-latest
     steps:
       - name: Something
         run: echo "Someghing"
