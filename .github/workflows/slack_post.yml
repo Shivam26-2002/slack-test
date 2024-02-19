@@ -1,0 +1,10 @@
+name: Generate Slack Post
+
+on: workflow_call
+
+jobs:
+  Slack_Post_Status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Initial Post To Slack Channel
+        run: echo "Run slack post"
