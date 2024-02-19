@@ -33,7 +33,7 @@ jobs:
 
   Check-job-status:
     runs-on: ubuntu-latest
-    needs: deploy_status
+    needs: [deploy_status]
     if: always()
     steps:
       - name: Check status
@@ -42,12 +42,12 @@ jobs:
           echo "${{ needs.deploy_status.outputs.output1 }}"
     
   deploy-to-prod-two:
-    needs: deploy_status
-    # if: always()
+    needs: [deploy_status]
     if: needs.deploy_status.outputs.output1 == 'success'
+    uses: ./.github/workflows/reusable-deploy-to-server.yml
+    # if: always()
     # if: ${{ needs.deploy-to-prod-one.outputs.status == 'success' }}
     # if: ${{ needs.deploy-to-prod-one.result == 'failure' }}
-    uses: ./.github/workflows/reusable-deploy-to-server.yml
 
   # set_success_fail_workflow_name: 
   #   needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one,slack_update_pending_apr_prod_two, deploy-to-prod-two]
