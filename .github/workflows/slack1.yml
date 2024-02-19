@@ -22,7 +22,7 @@ jobs:
     
   deploy-to-prod-two:
     needs: [deploy-to-prod-one]
-    if: ${{ needs.deploy-to-prod-one.result }} == 'failure' | ${{ needs.deploy-to-prod-one.result }} == 'success'
+    if: ${{ needs.deploy-to-prod-one.result == 'failure' }}
     uses: ./.github/workflows/reusable-deploy-to-server.yml
 
   # set_success_fail_workflow_name: 
