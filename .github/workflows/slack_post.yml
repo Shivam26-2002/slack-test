@@ -7,4 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Initial Post To Slack Channel
-        run: echo "Run slack post"
+        run: |
+          exit 1
+          echo "Run slack post"
