@@ -34,16 +34,21 @@ jobs:
   Check-job-status:
     runs-on: ubuntu-latest
     needs: [deploy_status]
+    outputs:
+      output1: ${{ steps.step2.outputs.ans }}
     if: always()
     steps:
       - name: Check status
+        id: step2
         run: |
           echo "Deploy status result ${{needs.deploy_status.result}}"
           echo "Dependency result ${{ needs.deploy_status.outputs.output1 }}"
+          echo "ans=${{ needs.deploy_status.outputs.output1 }}" >> GITHUB_OUTPUT
     
   deploy-to-prod-two:
     runs-on: ubuntu-latest
-    needs: deploy_status
+    needs: Check-job-status
+    if: needs.Check-job-status.outputs.output1 == 'success'
     # if: needs.deploy_status.outputs.output1 == 'success'
     steps:
       - name: Dummy step
