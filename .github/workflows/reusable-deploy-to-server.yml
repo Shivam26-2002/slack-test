@@ -1,0 +1,22 @@
+name: Deploy to server
+on: workflow_call  
+jobs: 
+  wait_for_approval:    
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deployment approved
+      id: set-output
+      run: |
+        echo 'Deployment approved'
+        echo "reviewed=true" >> $GITHUB_OUTPUT
+        
+  slack_update_in_progress:    
+    needs: [wait_for_approval]
+    uses: ./.github/workflows/slack_update.yml
+    
+  deploy-to-server:    
+    environment: ${{ inputs.environment }}    
+    runs-on: ubuntu-latest   
+    steps:     
+      - name: Run something
+        run : echo "Deploy to server"
