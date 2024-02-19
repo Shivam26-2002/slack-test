@@ -30,6 +30,13 @@ jobs:
       - name: Echo status
         id: step1
         run: echo "dependency=${{ needs.deploy-to-prod-one.outputs.status }}" >> $GITHUB_OUTPUT
+
+  Check-job-status:
+    runs-on: ubuntu-latest
+    needs: deploy_status
+    steps:
+      - name: Check status
+        run: echo "${{ needs.deploy_status.outputs.output1 }}"
     
   deploy-to-prod-two:
     needs: deploy_status
