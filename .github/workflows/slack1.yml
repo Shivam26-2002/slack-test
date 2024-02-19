@@ -26,7 +26,7 @@ jobs:
     if: always()
     steps:
       - name: Echo status
-        run: echo "${{ needs.deploy-to-prod-one.outputs.output1 }}"
+        run: echo "${{ needs.deploy-to-prod-one.outputs.status }}"
     
   deploy-to-prod-two:
     needs: [deploy-to-prod-one]
