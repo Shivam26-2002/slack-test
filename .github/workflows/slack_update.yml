@@ -1,0 +1,15 @@
+name: Update Slack Post
+
+on:
+  workflow_call:
+      
+jobs:
+  Slack_Update_Status:
+    runs-on:
+      group: ADS
+    steps:
+      - name: Something
+        run: echo "Someghing"
+
+
+
