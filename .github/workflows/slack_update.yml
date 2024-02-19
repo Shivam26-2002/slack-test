@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Something
-        run: echo "Someghing"
+        run: |
+          exit 1
+          echo "Someghing"
 
 
 
