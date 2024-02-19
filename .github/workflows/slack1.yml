@@ -44,7 +44,7 @@ jobs:
   deploy-to-prod-two:
     runs-on: ubuntu-latest
     needs: [deploy_status]
-    if: needs.deploy_status.outputs.output1 == 'success'
+    # if: needs.deploy_status.outputs.output1 == 'success'
     steps:
       - name: Dummy step
         run: echo "Dummy"
