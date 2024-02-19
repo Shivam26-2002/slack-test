@@ -21,8 +21,8 @@ jobs:
     uses: ./.github/workflows/slack_update.yml
     
   deploy-to-prod-two:
-    if: ${{ needs.deploy-to-prod-one.result == 'failure' }}
     needs: [deploy-to-prod-one]
+    if: ${{ needs.deploy-to-prod-one.result == 'failure' }}
     uses: ./.github/workflows/reusable-deploy-to-server.yml
 
   # set_success_fail_workflow_name: 
