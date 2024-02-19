@@ -9,7 +9,8 @@ jobs:
 
   deploy-job-result:
     runs-on: ubuntu-latest
-    # needs: deploy-to-prod-one
+    needs: deploy-to-prod-one
+    if: always()
     steps:
       - name: Deploy job status
         run: |
