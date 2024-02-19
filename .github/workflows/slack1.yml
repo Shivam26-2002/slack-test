@@ -42,9 +42,17 @@ jobs:
           echo "${{ needs.deploy_status.outputs.output1 }}"
     
   deploy-to-prod-two:
+    runs-on: ubuntu-latest
     needs: [deploy_status]
     if: needs.deploy_status.outputs.output1 == 'success'
-    uses: ./.github/workflows/reusable-deploy-to-server.yml
+    steps:
+      - name: Dummy step
+        run: echo "Dummy"
+
+
+
+    
+    # uses: ./.github/workflows/reusable-deploy-to-server.yml
     # if: always()
     # if: ${{ needs.deploy-to-prod-one.outputs.status == 'success' }}
     # if: ${{ needs.deploy-to-prod-one.result == 'failure' }}
