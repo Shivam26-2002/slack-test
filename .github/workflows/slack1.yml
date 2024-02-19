@@ -38,8 +38,8 @@ jobs:
     steps:
       - name: Check status
         run: |
-          echo "${{needs.deploy_status.result}}"
-          echo "${{ needs.deploy_status.outputs.output1 }}"
+          echo "Deploy status result ${{needs.deploy_status.result}}"
+          echo "Dependency result ${{ needs.deploy_status.outputs.output1 }}"
     
   deploy-to-prod-two:
     runs-on: ubuntu-latest
