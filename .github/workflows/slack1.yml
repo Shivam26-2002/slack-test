@@ -44,7 +44,7 @@ jobs:
   deploy-to-prod-two:
     needs: deploy_status
     # if: always()
-    if:  needs.deploy_status.outputs.output1 == 'success'
+    if: needs.deploy_status.outputs.output1 == 'success'
     # if: ${{ needs.deploy-to-prod-one.outputs.status == 'success' }}
     # if: ${{ needs.deploy-to-prod-one.result == 'failure' }}
     uses: ./.github/workflows/reusable-deploy-to-server.yml
