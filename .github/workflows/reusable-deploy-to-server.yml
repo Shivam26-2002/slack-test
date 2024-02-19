@@ -21,3 +21,10 @@ jobs:
       - name: Run something
         run : |
           echo "Deploy to server" >> $GITHUB_STEP_SUMMARY
+          
+  status-deploy:
+    runs-on: ubuntu-latest
+    needs: deploy-to-server
+    steps:
+      - name: Status of the deploy to server
+        run: echo "status_deploy=${{ needs.deploy-to-server.result }}" >> $GITHUB_OUTPUT
