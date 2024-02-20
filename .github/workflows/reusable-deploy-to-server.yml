@@ -5,9 +5,9 @@ on:
       environment:
         required: true
         type: string
-      # continue-on-error:
-      #   required: true
-      #   type: boolean 
+      continue-on-error:
+        required: true
+        type: boolean 
     outputs:
       status:
         value: ${{ jobs.status-deploy.outputs.output1 }}
@@ -27,7 +27,7 @@ jobs:
     uses: ./.github/workflows/slack_update.yml
     with:
       continue-on-error: true
-      # continue-on-error: ${{ inputs.continue-on-error }} 
+      # continue-on-error: ${{ inputs.continue-on-error }
     
   deploy-to-server:    
     environment: ${{ inputs.environment }}    
