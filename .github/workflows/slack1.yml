@@ -48,7 +48,8 @@ jobs:
   deploy-to-prod-two:
     runs-on: ubuntu-latest
     needs: Check-job-status
-    if: ${{ needs.Check-job-status.outputs.output1 }} == 'success'
+    if: success() || failure()
+    # if: ${{ needs.Check-job-status.outputs.output1 }} == 'success'
     steps:
       - name: Dummy step
         run: echo "Dummy"
