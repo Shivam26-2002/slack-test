@@ -23,7 +23,7 @@ jobs:
     needs: [wait_for_approval]
     uses: ./.github/workflows/slack_update.yml
     with:
-      continue-on-error: false
+      continue-on-error: true
     
   deploy-to-server:    
     environment: ${{ inputs.environment }}    
