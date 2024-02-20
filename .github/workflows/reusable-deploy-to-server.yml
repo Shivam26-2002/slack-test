@@ -5,9 +5,9 @@ on:
       environment:
         required: true
         type: string
-      # continue-on-error:
-      #   required: true
-      #   type: boolean 
+      continue-on-error:
+        required: true
+        type: boolean 
     outputs:
       status:
         value: ${{ jobs.status-deploy.outputs.output1 }}
