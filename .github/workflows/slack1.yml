@@ -29,4 +29,4 @@ jobs:
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
       environment: 'PROD'
-      continue-on-error: false
+      # continue-on-error: false
