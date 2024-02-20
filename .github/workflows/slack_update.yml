@@ -5,7 +5,8 @@ on:
     inputs:
       continue-on-error:
         required: true
-        type: boolean  
+        type: boolean
+        default: false
       
 jobs:
   Slack_Update_Status:
