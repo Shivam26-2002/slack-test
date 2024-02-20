@@ -46,14 +46,15 @@ jobs:
           echo "ans=${{ needs.deploy_status.outputs.output1 }}" >> GITHUB_OUTPUT
     
   deploy-to-prod-two:
-    runs-on: ubuntu-latest
+    # runs-on: ubuntu-latest
     needs: deploy-to-prod-one
+    uses: ./.github/workflows/reusable-deploy-to-server.yml
     # needs: Check-job-status
     # if: success() || failure()
     # if: ${{ needs.Check-job-status.outputs.output1 }} == 'success'
-    steps:
-      - name: Dummy step
-        run: echo "Dummy"
+    # steps:
+    #   - name: Dummy step
+    #     run: echo "Dummy"
     # needs: deploy-to-prod-one
     # if: needs.deploy_status.outputs.output1 == 'success'
     # uses: ./.github/workflows/reusable-deploy-to-server.yml
