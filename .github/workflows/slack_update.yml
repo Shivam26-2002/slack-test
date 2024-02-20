@@ -17,11 +17,3 @@ jobs:
         run: |
           exit 1
           echo "Something"
-  # Slack-Status:
-  #   runs-on: ubuntu-latest
-  #   if: always()
-  #   needs: Slack_Update_Status
-  #   steps:
-  #     - name: Status of the job
-  #       run: |
-  #         echo "slack_status=${{ needs.Slack_Update_Status.result }}" >> $GITHUB_OUTPUT
