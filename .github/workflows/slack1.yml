@@ -7,7 +7,7 @@ jobs:
   deploy-to-prod-one:      
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
-      environment: 'Production'
+      environment: 'PROD'
 
   # deploy-job-result:
   #   runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
     needs: deploy-to-prod-one
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
-      environment: 'Production'
+      environment: 'PROD'
     # needs: Check-job-status
     # if: success() || failure()
     # if: ${{ needs.Check-job-status.outputs.output1 }} == 'success'
