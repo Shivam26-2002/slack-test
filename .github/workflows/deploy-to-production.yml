@@ -22,7 +22,7 @@ jobs:
     needs: [deploy-to-prod-one,slack_update_pending_apr_prod_one]
     uses: ./.github/workflows/slack_update.yml
     with:
-      continue-on-error: true
+      continue-on-error: false
     
   deploy-to-prod-two:
     # runs-on: ubuntu-latest
