@@ -1,6 +1,10 @@
 name: Deploy to server
 on:
   workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string  
     outputs:
       status:
         value: ${{ jobs.status-deploy.outputs.output1 }}
