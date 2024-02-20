@@ -8,6 +8,7 @@ jobs:
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
       environment: 'PROD'
+      continue-on-error: true
 
   # deploy-job-result:
   #   runs-on: ubuntu-latest
