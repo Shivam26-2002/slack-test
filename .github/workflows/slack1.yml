@@ -8,7 +8,7 @@ jobs:
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
       environment: 'PROD'
-      continue-on-error: true
+      continue-on-error: false
 
   # deploy-job-result:
   #   runs-on: ubuntu-latest
@@ -23,7 +23,7 @@ jobs:
     needs: [deploy-to-prod-one,slack_update_pending_apr_prod_one]
     uses: ./.github/workflows/slack_update.yml
     with:
-      continue-on-error: true
+      continue-on-error: false
 
   # deploy_status:
   #   runs-on: ubuntu-latest
@@ -56,7 +56,7 @@ jobs:
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
       environment: 'PROD'
-      continue-on-error: true
+      continue-on-error: false
     # needs: Check-job-status
     # if: success() || failure()
     # if: ${{ needs.Check-job-status.outputs.output1 }} == 'success'
