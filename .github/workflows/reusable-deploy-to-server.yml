@@ -15,7 +15,7 @@ jobs:
         echo 'Deployment approved'
         echo "reviewed=true" >> $GITHUB_OUTPUT
         
-  slack_update_in_progress:    
+  slack_update_in_progress:   
     needs: [wait_for_approval]
     uses: ./.github/workflows/slack_update.yml
     
