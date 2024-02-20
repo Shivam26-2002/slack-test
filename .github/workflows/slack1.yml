@@ -54,6 +54,7 @@ jobs:
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
       environment: 'PROD'
+      continue-on-error: true
     # needs: Check-job-status
     # if: success() || failure()
     # if: ${{ needs.Check-job-status.outputs.output1 }} == 'success'
