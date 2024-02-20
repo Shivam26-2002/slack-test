@@ -6,49 +6,53 @@ jobs:
     
   deploy-to-prod-one:      
     uses: ./.github/workflows/reusable-deploy-to-server.yml
+    with:
+      environment: 'Production'
 
-  deploy-job-result:
-    runs-on: ubuntu-latest
-    needs: deploy-to-prod-one
-    if: always()
-    steps:
-      - name: Deploy job status
-        run: |
-          echo "${{ needs.deploy-to-prod-one.result }}" >> $GITHUB_STEP_SUMMARY
+  # deploy-job-result:
+  #   runs-on: ubuntu-latest
+  #   needs: deploy-to-prod-one
+  #   if: always()
+  #   steps:
+  #     - name: Deploy job status
+  #       run: |
+  #         echo "${{ needs.deploy-to-prod-one.result }}" >> $GITHUB_STEP_SUMMARY
       
   slack_update_pending_apr_prod_two:    
     needs: [deploy-to-prod-one,slack_update_pending_apr_prod_one]
     uses: ./.github/workflows/slack_update.yml
 
-  deploy_status:
-    runs-on: ubuntu-latest
-    needs: deploy-to-prod-one
-    outputs:
-      output1: ${{ steps.step1.outputs.dependency }}
-    if: always()
-    steps:
-      - name: Echo status
-        id: step1
-        run: echo "dependency=${{ needs.deploy-to-prod-one.outputs.status }}" >> $GITHUB_OUTPUT
+  # deploy_status:
+  #   runs-on: ubuntu-latest
+  #   needs: deploy-to-prod-one
+  #   outputs:
+  #     output1: ${{ steps.step1.outputs.dependency }}
+  #   if: always()
+  #   steps:
+  #     - name: Echo status
+  #       id: step1
+  #       run: echo "dependency=${{ needs.deploy-to-prod-one.outputs.status }}" >> $GITHUB_OUTPUT
 
-  Check-job-status:
-    runs-on: ubuntu-latest
-    needs: [deploy_status]
-    outputs:
-      output1: ${{ steps.step2.outputs.ans }}
-    if: always()
-    steps:
-      - name: Check status
-        id: step2
-        run: |
-          echo "Deploy status result ${{needs.deploy_status.result}}"
-          echo "Dependency result ${{ needs.deploy_status.outputs.output1 }}"
-          echo "ans=${{ needs.deploy_status.outputs.output1 }}" >> GITHUB_OUTPUT
+  # Check-job-status:
+  #   runs-on: ubuntu-latest
+  #   needs: [deploy_status]
+  #   outputs:
+  #     output1: ${{ steps.step2.outputs.ans }}
+  #   if: always()
+  #   steps:
+  #     - name: Check status
+  #       id: step2
+  #       run: |
+  #         echo "Deploy status result ${{needs.deploy_status.result}}"
+  #         echo "Dependency result ${{ needs.deploy_status.outputs.output1 }}"
+  #         echo "ans=${{ needs.deploy_status.outputs.output1 }}" >> GITHUB_OUTPUT
     
   deploy-to-prod-two:
     # runs-on: ubuntu-latest
     needs: deploy-to-prod-one
     uses: ./.github/workflows/reusable-deploy-to-server.yml
+    with:
+      environment: 'Production'
     # needs: Check-job-status
     # if: success() || failure()
     # if: ${{ needs.Check-job-status.outputs.output1 }} == 'success'
