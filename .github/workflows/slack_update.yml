@@ -11,12 +11,7 @@ on:
 jobs:
   Slack_Update_Status:
     runs-on: ubuntu-latest
-    # env:
-    #   err: ${{ github.event.inputs.continue-on-error || 'latest' }}
-    # continue-on-error: $err
-    # continue-on-error: ${{ github.event.inputs.continue-on-error || false }} 
-    # ${{github.event.inputs.username}} 
-    continue-on-error: ${{ inputs.continue-on-error || false }} 
+    continue-on-error: ${{ inputs.continue-on-error }} 
     steps:
       - name: Something
         run: |
