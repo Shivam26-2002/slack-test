@@ -14,7 +14,7 @@ jobs:
     # env:
     #   err: ${{ github.event.inputs.continue-on-error || 'latest' }}
     # continue-on-error: $err
-    continue-on-error: ${{ inputs.continue-on-error }} 
+    continue-on-error: ${{ inputs.continue-on-error || false }} 
     steps:
       - name: Something
         run: |
