@@ -30,7 +30,7 @@ jobs:
       - name: Run something
         run : |
           echo "Deploy to server" >> $GITHUB_STEP_SUMMARY
-          exit 1
+          # exit 1
                     
   status-deploy:
     runs-on: ubuntu-latest
