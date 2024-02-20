@@ -10,7 +10,7 @@ on:
 jobs:
   Slack_Update_Status:
     runs-on: ubuntu-latest
-    continue-on-error: ${{inputs.continue-on-error}} 
+    continue-on-error: ${{ inputs.continue-on-error }} 
     steps:
       - name: Something
         run: |
