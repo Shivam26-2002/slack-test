@@ -1,0 +1,34 @@
+name: Build and Deploy - Production
+on: 
+  workflow_dispatch:
+    # inputs:
+      # continue-on-error: 
+      #   required: true
+      #   type: boolean
+        # description: Continue on error of slack
+        # default: false
+jobs:
+  slack_update_pending_apr_prod_one:    
+    uses: ./.github/workflows/slack_post.yml
+    
+  deploy-to-prod-one:      
+    uses: ./.github/workflows/reusable-deploy-to-server.yml
+    with:
+      environment: 'PROD'
+      # continue-on-error: true
+      # continue-on-error: ${{ inputs.continue-on-error }}
+      
+  slack_update_pending_apr_prod_two:    
+    needs: [deploy-to-prod-one,slack_update_pending_apr_prod_one]
+    uses: ./.github/workflows/slack_update.yml
+    # with:
+    #   continue-on-error: true
+    
+  deploy-to-prod-two:
+    # runs-on: ubuntu-latest
+    needs: deploy-to-prod-one
+    uses: ./.github/workflows/reusable-deploy-to-server.yml
+    with:
+      environment: 'PROD'
+      # continue-on-error: true
+      # continue-on-error: false
