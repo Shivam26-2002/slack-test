@@ -15,7 +15,7 @@ jobs:
     needs: [deploy-to-prod-one,slack_update_pending_apr_prod_one]
     uses: ./.github/workflows/slack_update.yml
     with:
-      continue-on-error: 
+      continue-on-error: true
     
   deploy-to-prod-two:
     needs: deploy-to-prod-one
