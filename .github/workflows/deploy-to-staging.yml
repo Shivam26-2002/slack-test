@@ -11,6 +11,6 @@ jobs:
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
       environment: 'Staging'
-      continue-on-error: true
+      # continue-on-error: true
 
       
