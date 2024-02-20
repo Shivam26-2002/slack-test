@@ -1,0 +1,15 @@
+name: Build and Deploy - Staging
+
+on:
+  workflow_dispatch:
+       
+jobs:      
+  slack_update_in_progress:    
+    uses: ./.github/workflows/slack_post.yml   
+
+  deploy-to-staging:      
+    uses: ./.github/workflows/reusable-deploy-to-server.yml
+    with:
+      environment: 'Staging'
+
+      
