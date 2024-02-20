@@ -2,11 +2,11 @@ name: Update Slack Post
 
 on:
   workflow_call:
-  #   inputs:
-  #     continue-on-error:
-  #       required: true
-  #       type: boolean
-  #       default: false
+    inputs:
+      continue-on-error:
+        required: true
+        type: boolean
+        default: false
       
 jobs:
   Slack_Update_Status:
