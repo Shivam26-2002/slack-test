@@ -65,7 +65,7 @@ jobs:
           $prod_one_result='failure'
         elif [[ $prod_two_result == '' ]]; then
           $prod_two_result='failure'
-        
+        fi
 
         
         echo $prod_one_result
