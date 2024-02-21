@@ -51,7 +51,9 @@ jobs:
     if: ${{ always() }}
     runs-on: ubuntu-latest
     outputs: 
-      slack_workflow_name: ${{ steps.set-slack-workflow-name.outputs.slack_workflow_name }}      
+      slack_workflow_name: ${{ steps.set-slack-workflow-name.outputs.slack_workflow_name }}
+      prod_one_result: ${{ steps.set-slack-workflow-name.outputs.prod_one_result }}
+      prod_two_result: ${{ steps.set-slack-workflow-name.outputs.prod_two_result }}
     steps:
     - name: Set workflow name for slack message
       id: set-slack-workflow-name
@@ -62,10 +64,10 @@ jobs:
         prod_two_reviewed: ${{ needs.deploy-to-prod-two.outputs.reviewed }}
       run: |
         if [[ $prod_one_result == '' ]]; then
-          prod_one_result='failure'
+          prod_one_result='failure' >> $GITHUB_OUTPUT 
         fi
         if [[ $prod_two_result == '' ]]; then
-          prod_two_result='failure'
+          prod_two_result='failure' >> $GITHUB_OUTPUT 
         fi
 
         
@@ -99,7 +101,7 @@ jobs:
     with:
       SITE_URL: 'https://jlg.com'
       SUCCESS_CHECK: ${{ needs.deploy-status-prod-1.outputs.output1  == 'success' && needs.deploy-status-prod-2.outputs.output1  == 'success' && 'true' || 'false' }}
-      FAILURE_CHECK: ${{ (needs.deploy-status-prod-1.outputs.output1  == 'failure' && needs.deploy-to-prod-one.outputs.reviewed == 'true') || (needs.deploy-status-prod-2.outputs.output1  == 'failure' && needs.deploy-to-prod-two.outputs.reviewed == 'true')  && 'true' || 'false' }}
+      FAILURE_CHECK: ${{ (needs.set_success_fail_workflow_name.outputs.prod_one_result  == 'failure' && needs.deploy-to-prod-one.outputs.reviewed == 'true') || (needs.set_success_fail_workflow_name.outputs.prod_two_result  == 'failure' && needs.deploy-to-prod-two.outputs.reviewed == 'true')  && 'true' || 'false' }}
       CANCELLED_CHECK: 'false'
       WORKFLOW_NAME: ${{ needs.set_success_fail_workflow_name.outputs.slack_workflow_name }}
     secrets: inherit
