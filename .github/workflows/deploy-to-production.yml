@@ -85,9 +85,13 @@ jobs:
     runs-on: ubuntu-latest  
     steps:
     - name: Print outputs
+      env:
+        prod_one_result: ${{ needs.set_success_fail_workflow_name.outputs.prod_one_result }}    
+        prod_two_result: ${{ needs.set_success_fail_workflow_name.outputs.prod_two_result }}
+  
       run: |
-       echo ${{ needs.set_success_fail_workflow_name.outputs.prod_one_result }}    
-       echo ${{ needs.set_success_fail_workflow_name.outputs.prod_two_result }}    
+          echo "prod_one_result: $prod_one_result"
+          echo "prod_two_result: $prod_two_result"
     
   slack_update_result_success_failure:    
     needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one, slack_update_pending_apr_prod_two, deploy-to-prod-two, set_success_fail_workflow_name]
