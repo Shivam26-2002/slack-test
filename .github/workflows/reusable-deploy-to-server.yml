@@ -7,7 +7,7 @@ on:
         type: string
     outputs:
       result_deploy_server:
-        value: ${{ jobs.status-deploy.outputs.output1 }}
+        value: ${{ jobs.result-deploy-to-server.outputs.output1 }}
 
 jobs: 
   wait_for_approval:    
