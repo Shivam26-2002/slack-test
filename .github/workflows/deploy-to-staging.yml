@@ -12,20 +12,22 @@ jobs:
     with:
       environment: 'Staging'
 
-  # deploy-status-staging:
-  #   runs-on: ubuntu-latest
-  #   needs: deploy-to-staging
-  #   outputs:
-  #     output1: ${{ steps.step1.outputs.staging-result }}
-  #   if: always()
-  #   steps:
-  #     - name: Echo status
-  #       id: step1
-  #       run: | 
-  #         echo "staging-result=${{ needs.deploy-to-staging.outputs.result_deploy_server }}" >> $GITHUB_OUTPUT
-  #         if [[ staging-result == '' ]]; then
-  #           staging-result= 'failure' >> $GITHUB_OUTPUT
-  #         fi
+  deploy-status-staging:
+    runs-on: ubuntu-latest
+    needs: deploy-to-staging
+    outputs:
+      output1: ${{ steps.step1.outputs.staging-result }}
+    if: always()
+    steps:
+      - name: Echo status
+        id: step1
+        env:
+          staging-result: ${{ needs.deploy-to-staging.outputs.result_deploy_server }}
+        run: | 
+          echo "staging-result=${{ needs.deploy-to-staging.outputs.result_deploy_server }}" >> $GITHUB_OUTPUT
+          if [[ staging-result == '' ]]; then
+            staging-result= 'failure' >> $GITHUB_OUTPUT
+          fi
 
 
   # slack_update_result_success_failure:    
