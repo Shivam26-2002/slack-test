@@ -37,6 +37,7 @@ jobs:
 
   result-deploy-to-server:
     runs-on: ubuntu-latest
+    if: always()
     needs: deploy-to-server
     outputs:
       output1: ${{ steps.step1.outputs.result_deploy }}
