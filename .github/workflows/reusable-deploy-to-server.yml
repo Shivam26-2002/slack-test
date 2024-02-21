@@ -45,7 +45,7 @@ jobs:
           runno: ${{ inputs.runno }}
         run : |
           echo "Deploy to server" >> $GITHUB_STEP_SUMMARY
-          if[[ $runno == '2'  ]]; then
+          if[[ $runno == '2' ]]; then
              exit 1
           fi
          
