@@ -22,13 +22,13 @@ jobs:
       - name: Echo status
         id: step1
         env:
-          staging-result: ${{ needs.deploy-to-staging.outputs.result_deploy_server }}
+          staging_result: ${{ needs.deploy-to-staging.outputs.result_deploy_server }}
         run: | 
-          echo "staging-result=${{ needs.deploy-to-staging.outputs.result_deploy_server }}" >> $GITHUB_OUTPUT
-          if [[ staging-result == '' ]]; then
-            staging-result= 'failure' >> $GITHUB_OUTPUT
+          echo "staging_result=${{ needs.deploy-to-staging.outputs.result_deploy_server }}" >> $GITHUB_OUTPUT
+          if [[ staging_result == '' ]]; then
+            staging_result= 'failure' >> $GITHUB_OUTPUT
           fi
-          echo $staging-result
+          echo $staging_result
 
 
   # slack_update_result_success_failure:    
