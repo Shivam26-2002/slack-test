@@ -62,9 +62,9 @@ jobs:
         prod_two_reviewed: ${{ needs.deploy-to-prod-two.outputs.reviewed }}
       run: |
         if [[ $prod_one_result == '' ]]; then
-          $prod_one_result='failure'
+          prod_one_result='failure'
         elif [[ $prod_two_result == '' ]]; then
-          $prod_two_result='failure'
+          prod_two_result='failure'
         fi
 
         
