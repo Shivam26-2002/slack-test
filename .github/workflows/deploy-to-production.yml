@@ -78,7 +78,17 @@ jobs:
         else         
           echo "slack_workflow_name=Build and Deploy - Production" >> $GITHUB_OUTPUT 
         fi                               
-                       
+
+  test_outputs:   
+    needs: [set_success_fail_workflow_name]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest  
+    steps:
+    - name: Print outputs
+      run: |
+       echo ${{ needs.set_success_fail_workflow_name.outputs.prod_one_result }}    
+       echo ${{ needs.set_success_fail_workflow_name.outputs.prod_two_result }}    
+    
   slack_update_result_success_failure:    
     needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one, slack_update_pending_apr_prod_two, deploy-to-prod-two, set_success_fail_workflow_name]
     # if: always()
