@@ -21,8 +21,8 @@ jobs:
     steps:
       - name: Echo status
         id: step1
-        env:
-          staging_result: ${{ needs.deploy-to-staging.outputs.result_deploy_server }}
+        # env:
+        #   staging_result: ${{ needs.deploy-to-staging.outputs.result_deploy_server }}
         run: | 
           echo "staging_result=${{ needs.deploy-to-staging.outputs.result_deploy_server }}" >> $GITHUB_OUTPUT
           if [[ staging_result == '' ]]; then
