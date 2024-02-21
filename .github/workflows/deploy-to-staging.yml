@@ -28,6 +28,7 @@ jobs:
           if [[ staging-result == '' ]]; then
             staging-result= 'failure' >> $GITHUB_OUTPUT
           fi
+          echo $staging-result
 
 
   # slack_update_result_success_failure:    
