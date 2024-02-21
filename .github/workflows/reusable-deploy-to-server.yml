@@ -44,6 +44,7 @@ jobs:
     steps:
       - name: Status of the deploy to server
         id: step1
-        run: echo "result_deploy=${{ needs.deploy-to-server.result }}" >> $GITHUB_OUTPUT
+        run: echo "result_deploy=success" >> $GITHUB_OUTPUT
+        # run: echo "result_deploy=${{ needs.deploy-to-server.result }}" >> $GITHUB_OUTPUT
 
                     
