@@ -25,19 +25,18 @@ jobs:
         env:
           staging_result: ${{ needs.deploy-to-staging.outputs.result_deploy_server }}
         run: | 
-          echo "staging_result=${{ needs.deploy-to-staging.outputs.result_deploy_server }}" >> $GITHUB_OUTPUT
-          if [[ $staging_result == '' ]]; then
-            staging_result='failure' >> $GITHUB_OUTPUT 
+          # echo "staging_result=${{ needs.deploy-to-staging.outputs.result_deploy_server }}" >> $GITHUB_OUTPUT
+          if [[ $staging_result == 'success' ]]; then
+            echo "staging_result=success" >> $GITHUB_OUTPUT
+          else
+            echo "staging_result=failure" >> $GITHUB_OUTPUT            
           fi
           echo $staging_result
 
-  # Check-Output:
-  #   runs-on: ubuntu-latest
-  #   needs: []
-
+  
 
   slack_update_result_success_failure:    
-    needs: [deploy-to-staging, deploy-status-staging, slack_update_in_progress]
+    needs: [deploy-to-staging, slack_update_in_progress]
     if: ${{ always() && success('slack_update_in_progress') }}    
     uses: ./.github/workflows/slack_result.yml
     with:
