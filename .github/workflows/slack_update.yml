@@ -15,5 +15,5 @@ jobs:
     steps:
       - name: Something
         run: |
-          exit 1
+          # exit 1
           echo "Something"
