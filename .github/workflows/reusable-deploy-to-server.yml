@@ -6,6 +6,9 @@ on:
         required: true
         type: string
     outputs:
+      reviewed:
+        description: "Output to check if the job was approved"
+        value: ${{ jobs.wait_for_approval.outputs.reviewed }} 
       result_deploy_server:
         value: ${{ jobs.result-deploy-to-server.outputs.output1 }}
 
