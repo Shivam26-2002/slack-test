@@ -63,7 +63,8 @@ jobs:
       run: |
         if [[ $prod_one_result == '' ]]; then
           prod_one_result='failure'
-        elif [[ $prod_two_result == '' ]]; then
+        fi
+        if [[ $prod_two_result == '' ]]; then
           prod_two_result='failure'
         fi
 
