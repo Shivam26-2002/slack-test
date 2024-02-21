@@ -101,7 +101,6 @@ jobs:
     
   slack_update_result_success_failure:    
     needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one, slack_update_pending_apr_prod_two, deploy-to-prod-two, set_success_fail_workflow_name]
-    # if: always()
     if: ${{ always() && success('slack_update_pending_apr_prod_one') }}    
     uses: ./.github/workflows/slack_result.yml
     with:
