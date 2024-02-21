@@ -28,4 +28,4 @@ jobs:
         run: |
           echo "SUCCESS_CHECK: $SUCCESS_CHECK"
           echo "FAILURE_CHECK: $FAILURE_CHECK"
-          echo "CANCELLED_CHECK: $WORKFLOW_NAME"
+          echo "WORKFLOW_NAME: $WORKFLOW_NAME"
