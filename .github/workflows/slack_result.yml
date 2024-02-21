@@ -1,7 +1,20 @@
 name: Generate Workflow Result
 
 on:
-  workflow_call:        
+  workflow_call: 
+    inputs:
+      SUCCESS_CHECK:
+       required: true
+       type: string
+       description: Check if previous jobs were successful
+      FAILURE_CHECK:
+       required: true
+       type: string
+       description: Check if previous jobs failed
+      WORKFLOW_NAME:
+       required: true
+       type: string
+       description: Name of the workflow        
 
 jobs:
   Slack_Update_Status:
@@ -12,3 +25,13 @@ jobs:
         run: |
           # exit 1
           echo "Something"
+
+      - name: Print inputs
+        env:
+          SUCCESS_CHECK: ${{ inputs.SUCCESS_CHECK }}
+          FAILURE_CHECK: ${{ inputs.FAILURE_CHECK }}
+          WORKFLOW_NAME: ${{ inputs.WORKFLOW_NAME }}
+        run: |
+          echo "SUCCESS_CHECK: $SUCCESS_CHECK"
+          echo "FAILURE_CHECK: $FAILURE_CHECK"
+          echo "CANCELLED_CHECK: $WORKFLOW_NAME"
