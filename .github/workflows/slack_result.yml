@@ -16,7 +16,7 @@ on:
        type: string
        description: Name of the workflow
       CANCELLED_CHECK:
-       required: true
+       required: false
        type: string
        description: Name of the workflow 
        default: false
