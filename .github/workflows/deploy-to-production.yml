@@ -47,64 +47,64 @@ jobs:
         run: echo "production-two-result=${{ needs.deploy-to-prod-two.outputs.result_deploy_server }}" >> $GITHUB_OUTPUT
 
 
-  # set_success_fail_workflow_name: 
-  #   needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one,slack_update_pending_apr_prod_two, deploy-to-prod-two]
-  #   if: ${{ always() }}
-  #   runs-on: ubuntu-latest
-  #   outputs: 
-  #     slack_workflow_name: ${{ steps.set-slack-workflow-name.outputs.slack_workflow_name }}      
-  #   steps:
-  #   - name: Set workflow name for slack message
-  #     id: set-slack-workflow-name
-  #     env:
-  #       prod_one_result: ${{ needs.deploy-to-prod-one.result }}
-  #       prod_two_result: ${{ needs.deploy-to-prod-two.result }}
-  #       prod_one_reviewed: ${{ needs.deploy-to-prod-one.outputs.reviewed }}
-  #       prod_two_reviewed: ${{ needs.deploy-to-prod-two.outputs.reviewed }}
-  #     run: |
-  #       echo $prod_one_result
-  #       echo $prod_two_result
-  #       echo $prod_one_reviewed
-  #       echo $prod_two_reviewed
+  set_success_fail_workflow_name: 
+    needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one,slack_update_pending_apr_prod_two, deploy-to-prod-two]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    outputs: 
+      slack_workflow_name: ${{ steps.set-slack-workflow-name.outputs.slack_workflow_name }}      
+    steps:
+    - name: Set workflow name for slack message
+      id: set-slack-workflow-name
+      env:
+        prod_one_result: ${{ needs.deploy-status-prod-1.outputs.output1 }}
+        prod_two_result: ${{ needs.deploy-status-prod-1.outputs.output1 }}
+        prod_one_reviewed: ${{ needs.deploy-to-prod-one.outputs.reviewed }}
+        prod_two_reviewed: ${{ needs.deploy-to-prod-two.outputs.reviewed }}
+      run: |
+        echo $prod_one_result
+        echo $prod_two_result
+        echo $prod_one_reviewed
+        echo $prod_two_reviewed
         
-  #       if [[ $prod_one_result == 'cancelled' ]]; then            
-  #          echo "slack_workflow_name=Build and Deploy - Prod1" >> $GITHUB_OUTPUT   
-  #       elif [[ $prod_two_result == 'cancelled' ]]; then            
-  #         echo "slack_workflow_name=Build and Deploy - Prod2" >> $GITHUB_OUTPUT                    
-  #       elif [[ $prod_one_result == 'failure' ]] && [[ $prod_one_reviewed == 'true' ]]; then              
-  #          echo "slack_workflow_name=Build and Deploy - Prod1" >> $GITHUB_OUTPUT                    
-  #       elif [[ $prod_one_result == 'failure' ]] && [[ $prod_one_reviewed != 'true' ]]; then                  
-  #          echo "slack_workflow_name=Build and Deploy - Prod1" >> $GITHUB_OUTPUT                                       
-  #       elif [[ $prod_one_result == 'success' ]] && [[ $prod_two_result == 'success' ]]; then                         
-  #          echo "slack_workflow_name=Build and Deploy - Prod2" >> $GITHUB_OUTPUT          
-  #       elif [[ $prod_one_result == 'success' ]]  && [[ $prod_two_result == 'failure' ]] && [[ $prod_two_reviewed == 'true' ]]; then                    
-  #          echo "slack_workflow_name=Build and Deploy - Prod2" >> $GITHUB_OUTPUT        
-  #       elif [[ $prod_one_result == 'success' ]]  && [[ $prod_two_result == 'failure' ]] && [[ $prod_two_reviewed != 'true' ]]; then                       
-  #          echo "slack_workflow_name=Build and Deploy - Prod2" >> $GITHUB_OUTPUT           
-  #       else         
-  #         echo "slack_workflow_name=Build and Deploy - Production" >> $GITHUB_OUTPUT 
-  #       fi                               
+        if [[ $prod_one_result == 'cancelled' ]]; then            
+           echo "slack_workflow_name=Build and Deploy - Prod1" >> $GITHUB_OUTPUT   
+        elif [[ $prod_two_result == 'cancelled' ]]; then            
+          echo "slack_workflow_name=Build and Deploy - Prod2" >> $GITHUB_OUTPUT                    
+        elif [[ $prod_one_result == 'failure' ]] && [[ $prod_one_reviewed == 'true' ]]; then              
+           echo "slack_workflow_name=Build and Deploy - Prod1" >> $GITHUB_OUTPUT                    
+        elif [[ $prod_one_result == 'failure' ]] && [[ $prod_one_reviewed != 'true' ]]; then                  
+           echo "slack_workflow_name=Build and Deploy - Prod1" >> $GITHUB_OUTPUT                                       
+        elif [[ $prod_one_result == 'success' ]] && [[ $prod_two_result == 'success' ]]; then                         
+           echo "slack_workflow_name=Build and Deploy - Prod2" >> $GITHUB_OUTPUT          
+        elif [[ $prod_one_result == 'success' ]]  && [[ $prod_two_result == 'failure' ]] && [[ $prod_two_reviewed == 'true' ]]; then                    
+           echo "slack_workflow_name=Build and Deploy - Prod2" >> $GITHUB_OUTPUT        
+        elif [[ $prod_one_result == 'success' ]]  && [[ $prod_two_result == 'failure' ]] && [[ $prod_two_reviewed != 'true' ]]; then                       
+           echo "slack_workflow_name=Build and Deploy - Prod2" >> $GITHUB_OUTPUT           
+        else         
+          echo "slack_workflow_name=Build and Deploy - Production" >> $GITHUB_OUTPUT 
+        fi                               
                        
-  # slack_update_result_success_failure:    
-  #   needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one,slack_update_pending_apr_prod_two, deploy-to-prod-two, set_success_fail_workflow_name]
-  #   if: ${{ always() && success('slack_update_pending_apr_prod_one') }}    
-  #   uses: Access-Segment/Sitecore/.github/workflows/slack_result.yml@main
-  #   with:
-  #     SITE_URL: 'https://jlg.com'
-  #     SUCCESS_CHECK: ${{ needs.deploy-to-prod-one.result  == 'success' && needs.deploy-to-prod-two.result  == 'success' && 'true' || 'false' }}
-  #     FAILURE_CHECK: ${{ (needs.deploy-to-prod-one.result  == 'failure' && needs.deploy-to-prod-one.outputs.reviewed == 'true') || (needs.deploy-to-prod-two.result  == 'failure' && needs.deploy-to-prod-two.outputs.reviewed == 'true')  && 'true' || 'false' }}
-  #     CANCELLED_CHECK: 'false'
-  #     WORKFLOW_NAME: ${{ needs.set_success_fail_workflow_name.outputs.slack_workflow_name }}
-  #   secrets: inherit
+  slack_update_result_success_failure:    
+    needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one,slack_update_pending_apr_prod_two, deploy-to-prod-two, set_success_fail_workflow_name]
+    if: ${{ always() && success('slack_update_pending_apr_prod_one') }}    
+    uses: Access-Segment/Sitecore/.github/workflows/slack_result.yml@main
+    with:
+      SITE_URL: 'https://jlg.com'
+      SUCCESS_CHECK: ${{ needs.deploy-to-prod-one.result  == 'success' && needs.deploy-to-prod-two.result  == 'success' && 'true' || 'false' }}
+      FAILURE_CHECK: ${{ (needs.deploy-to-prod-one.result  == 'failure' && needs.deploy-to-prod-one.outputs.reviewed == 'true') || (needs.deploy-to-prod-two.result  == 'failure' && needs.deploy-to-prod-two.outputs.reviewed == 'true')  && 'true' || 'false' }}
+      CANCELLED_CHECK: 'false'
+      WORKFLOW_NAME: ${{ needs.set_success_fail_workflow_name.outputs.slack_workflow_name }}
+    secrets: inherit
       
-  # slack_update_result_cancelled:
-  #   if: ${{ cancelled() || ( failure('deploy-to-prod-one')  &&  needs.deploy-to-prod-one.outputs.reviewed != 'true') || ( failure('deploy-to-prod-two')  &&  needs.deploy-to-prod-two.outputs.reviewed != 'true') }}    
-  #   needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one,slack_update_pending_apr_prod_two, deploy-to-prod-two, set_success_fail_workflow_name]
-  #   uses: Access-Segment/Sitecore/.github/workflows/slack_result.yml@main
-  #   with:
-  #     SITE_URL: 'https://jlg.com'
-  #     SUCCESS_CHECK: 'false'
-  #     FAILURE_CHECK: 'false'
-  #     CANCELLED_CHECK: 'true'
-  #     WORKFLOW_NAME: ${{ needs.set_success_fail_workflow_name.outputs.slack_workflow_name }}
-  #   secrets: inherit
+  slack_update_result_cancelled:
+    if: ${{ cancelled() || ( failure('deploy-to-prod-one')  &&  needs.deploy-to-prod-one.outputs.reviewed != 'true') || ( failure('deploy-to-prod-two')  &&  needs.deploy-to-prod-two.outputs.reviewed != 'true') }}    
+    needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one,slack_update_pending_apr_prod_two, deploy-to-prod-two, set_success_fail_workflow_name]
+    uses: Access-Segment/Sitecore/.github/workflows/slack_result.yml@main
+    with:
+      SITE_URL: 'https://jlg.com'
+      SUCCESS_CHECK: 'false'
+      FAILURE_CHECK: 'false'
+      CANCELLED_CHECK: 'true'
+      WORKFLOW_NAME: ${{ needs.set_success_fail_workflow_name.outputs.slack_workflow_name }}
+    secrets: inherit
