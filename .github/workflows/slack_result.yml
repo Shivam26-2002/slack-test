@@ -14,7 +14,12 @@ on:
       WORKFLOW_NAME:
        required: true
        type: string
-       description: Name of the workflow        
+       description: Name of the workflow
+      CANCELLED_CHECK:
+       required: true
+       type: string
+       description: Name of the workflow 
+       default: false
 
 jobs:
   Slack_Update_Status:
@@ -25,7 +30,9 @@ jobs:
           SUCCESS_CHECK: ${{ inputs.SUCCESS_CHECK }}
           FAILURE_CHECK: ${{ inputs.FAILURE_CHECK }}
           WORKFLOW_NAME: ${{ inputs.WORKFLOW_NAME }}
+          CANCELLED_CHECK: ${{ inputs.CANCELLED_CHECK }}
         run: |
           echo "SUCCESS_CHECK: $SUCCESS_CHECK"
           echo "FAILURE_CHECK: $FAILURE_CHECK"
           echo "WORKFLOW_NAME: $WORKFLOW_NAME"
+          echo "CANCELLED_CHECK: $CANCELLED_CHECK"
