@@ -36,7 +36,7 @@ jobs:
   
 
   slack_update_result_success_failure:    
-    needs: [deploy-to-staging, slack_update_in_progress]
+    needs: [deploy-to-staging,deploy-status-staging, slack_update_in_progress]
     if: ${{ always() && success('slack_update_in_progress') }}    
     uses: ./.github/workflows/slack_result.yml
     with:
