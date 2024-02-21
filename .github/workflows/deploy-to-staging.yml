@@ -11,6 +11,7 @@ jobs:
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
       environment: 'Staging'
+      runno: '2'
 
   deploy-status-staging:
     runs-on: ubuntu-latest
