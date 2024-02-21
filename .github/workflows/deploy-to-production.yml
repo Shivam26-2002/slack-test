@@ -44,15 +44,15 @@ jobs:
         prod_two_reviewed: ${{ needs.deploy-to-prod-two.outputs.reviewed }}
       run: |
         if [[ $prod_one_result == 'success' ]]; then
-          prod_one_result='success' >> $GITHUB_OUTPUT 
+          echo "prod_one_result=success" >> $GITHUB_OUTPUT 
         else
-          prod_one_result='failure' >> $GITHUB_OUTPUT
+          echo "prod_one_result=failure" >> $GITHUB_OUTPUT
         fi
         
         if [[ $prod_two_result == 'success' ]]; then
-          prod_two_result='success' >> $GITHUB_OUTPUT 
+          echo "prod_two_result=success" >> $GITHUB_OUTPUT 
         else
-           prod_two_result='failure' >> $GITHUB_OUTPUT 
+           echo "prod_two_result=failure" >> $GITHUB_OUTPUT 
         fi
 
         
