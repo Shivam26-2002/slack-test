@@ -45,3 +45,13 @@ jobs:
       FAILURE_CHECK: ${{ needs.deploy-status-staging.outputs.staging_result == 'failure' && needs.deploy-to-staging.outputs.reviewed == 'true' && 'true' || 'false' }}
       # CANCELLED_CHECK: 'false'
       WORKFLOW_NAME: ${{ github.workflow }}
+
+  slack_update_result_cancelled:
+    if: ${{ cancelled() || ( failure('deploy-to-staging')  &&  needs.deploy-to-staging.outputs.reviewed != 'true') }}    
+    needs: [deploy-to-staging, slack_update_in_progress, deploy-status-staging]
+    uses: ./.github/workflows/slack_result.yml
+    with:
+      SUCCESS_CHECK: 'false'
+      FAILURE_CHECK: 'false'
+      CANCELLED_CHECK: 'true'
+      WORKFLOW_NAME: ${{ github.workflow }}     
