@@ -34,7 +34,7 @@ jobs:
   slack_update_result_success_failure:    
     needs: [deploy-to-staging, slack_update_in_progress]
     if: ${{ always() && success('slack_update_in_progress') }}    
-    uses: Access-Segment/Sitecore/.github/workflows/slack_result.yml@main
+    uses: ./.github/workflows/slack_result.yml
     with:
       SUCCESS_CHECK: ${{ needs.deploy-status-staging.outputs.output1 == 'success' && 'true' || 'false' }}
       FAILURE_CHECK: ${{ needs.deploy-status-staging.outputs.output1 == 'failure' && needs.deploy-to-staging.outputs.reviewed == 'true' && 'true' || 'false' }}
