@@ -40,7 +40,7 @@ jobs:
       - name: Run something
         run : |
           echo "Deploy to server" >> $GITHUB_STEP_SUMMARY
-          exit 1
+          # exit 1
       - name: Status of the deploy to server
         id: step1
         run: echo "result_deploy=success" >> $GITHUB_OUTPUT
