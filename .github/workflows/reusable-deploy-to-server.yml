@@ -5,6 +5,9 @@ on:
       environment:
         required: true
         type: string
+      runno:
+        required: true
+        type: string        
     outputs:
       reviewed:
         description: "Output to check if the job was approved"
@@ -38,9 +41,14 @@ jobs:
       output1: ${{ steps.step1.outputs.result_deploy }}
     steps:     
       - name: Run something
+        env: 
+          runno: ${{ inputs.runno }}
         run : |
           echo "Deploy to server" >> $GITHUB_STEP_SUMMARY
-          exit 1
+          if[[ $runno == '2'  ]]; then
+             exit 1
+          fi
+         
       - name: Status of the deploy to server
         id: step1
         run: echo "result_deploy=success" >> $GITHUB_OUTPUT
