@@ -17,6 +17,7 @@ jobs:
     needs: deploy-to-staging
     outputs:
       output1: ${{ steps.step1.outputs.staging-result }}
+      staging_result: ${{ steps.step1.outputs.staging_result }}
     if: always()
     steps:
       - name: Echo status
@@ -36,7 +37,7 @@ jobs:
     if: ${{ always() && success('slack_update_in_progress') }}    
     uses: ./.github/workflows/slack_result.yml
     with:
-      SUCCESS_CHECK: ${{ needs.deploy-status-staging.outputs.output1 == 'success' && 'true' || 'false' }}
-      FAILURE_CHECK: ${{ needs.deploy-status-staging.outputs.output1 == 'failure' && needs.deploy-to-staging.outputs.reviewed == 'true' && 'true' || 'false' }}
+      SUCCESS_CHECK: ${{ needs.deploy-status-staging.outputs.staging_result == 'success' && 'true' || 'false' }}
+      FAILURE_CHECK: ${{ needs.deploy-status-staging.outputs.staging_result == 'failure' && needs.deploy-to-staging.outputs.reviewed == 'true' && 'true' || 'false' }}
       # CANCELLED_CHECK: 'false'
       WORKFLOW_NAME: ${{ github.workflow }}
