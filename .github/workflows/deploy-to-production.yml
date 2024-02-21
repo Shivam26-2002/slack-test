@@ -96,15 +96,14 @@ jobs:
                        
   slack_update_result_success_failure:    
     needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one, deploy-status-prod-1, slack_update_pending_apr_prod_two, deploy-to-prod-two, deploy-status-prod-2, set_success_fail_workflow_name]
-    if: always()
-    # if: ${{ always() && success('slack_update_pending_apr_prod_one') }}    
+    # if: always()
+    if: ${{ always() && success('slack_update_pending_apr_prod_one') }}    
     uses: ./.github/workflows/slack_result.yml
     with:
       SUCCESS_CHECK: ${{ needs.deploy-status-prod-1.outputs.output1  == 'success' && needs.deploy-status-prod-2.outputs.output1  == 'success' && 'true' || 'false' }}
       FAILURE_CHECK: ${{ (needs.set_success_fail_workflow_name.outputs.prod_one_result  == 'failure' && needs.deploy-to-prod-one.outputs.reviewed == 'true') || (needs.set_success_fail_workflow_name.outputs.prod_two_result  == 'failure' && needs.deploy-to-prod-two.outputs.reviewed == 'true')  && 'true' || 'false' }}
       # CANCELLED_CHECK: 'false'
       WORKFLOW_NAME: ${{ needs.set_success_fail_workflow_name.outputs.slack_workflow_name }}
-    secrets: inherit
       
   # slack_update_result_cancelled:
   #   if: ${{ cancelled() || ( failure('deploy-to-prod-one')  &&  needs.deploy-to-prod-one.outputs.reviewed != 'true') || ( failure('deploy-to-prod-two')  &&  needs.deploy-to-prod-two.outputs.reviewed != 'true') }}    
