@@ -10,7 +10,7 @@ on:
         description: "Output to check if the job was approved"
         value: ${{ jobs.wait_for_approval.outputs.reviewed }} 
       result_deploy_server:
-        value: ${{ jobs.result-deploy-to-server.outputs.output1 }}
+        value: ${{ jobs.deploy-to-server.outputs.output1 }}
 
 jobs: 
   wait_for_approval:    
@@ -33,23 +33,28 @@ jobs:
     
   deploy-to-server:    
     environment: ${{ inputs.environment }}    
-    runs-on: ubuntu-latest   
+    runs-on: ubuntu-latest  
+    outputs:
+      output1: ${{ steps.step1.outputs.result_deploy }}
     steps:     
       - name: Run something
         run : |
           echo "Deploy to server" >> $GITHUB_STEP_SUMMARY
           exit 1
-
-  result-deploy-to-server:
-    runs-on: ubuntu-latest
-    if: always()
-    needs: deploy-to-server
-    outputs:
-      output1: ${{ steps.step1.outputs.result_deploy }}
-    steps:
       - name: Status of the deploy to server
         id: step1
         run: echo "result_deploy=success" >> $GITHUB_OUTPUT
-        # run: echo "result_deploy=${{ needs.deploy-to-server.result }}" >> $GITHUB_OUTPUT
+
+  # result-deploy-to-server:
+  #   runs-on: ubuntu-latest
+  #   if: always()
+  #   needs: deploy-to-server
+  #   outputs:
+  #     output1: ${{ steps.step1.outputs.result_deploy }}
+  #   steps:
+  #     - name: Status of the deploy to server
+  #       id: step1
+  #       run: echo "result_deploy=success" >> $GITHUB_OUTPUT
+  #       # run: echo "result_deploy=${{ needs.deploy-to-server.result }}" >> $GITHUB_OUTPUT
 
                     
