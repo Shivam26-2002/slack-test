@@ -6,7 +6,7 @@ on:
         required: true
         type: string
     outputs:
-      status:
+      result_deploy_server:
         value: ${{ jobs.status-deploy.outputs.output1 }}
 
 jobs: 
