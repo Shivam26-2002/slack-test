@@ -10,6 +10,7 @@ jobs:
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
       environment: 'PROD'
+      runno: '1'
 
 
 
@@ -25,6 +26,7 @@ jobs:
     uses: ./.github/workflows/reusable-deploy-to-server.yml
     with:
       environment: 'PROD'
+      runno: '2'
 
   set_success_fail_workflow_name: 
     needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one,slack_update_pending_apr_prod_two, deploy-to-prod-two]
