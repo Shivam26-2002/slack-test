@@ -8,5 +8,4 @@ jobs:
     steps:
       - name: Initial Post To Slack Channel
         run: |
-          # exit 1
           echo "Run slack post"
