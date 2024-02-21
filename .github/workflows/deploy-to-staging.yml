@@ -26,7 +26,7 @@ jobs:
         run: | 
           echo "staging_result=${{ needs.deploy-to-staging.outputs.result_deploy_server }}" >> $GITHUB_OUTPUT
           if [[ $staging_result == '' ]]; then
-            staging_result= 'failure' >> $GITHUB_OUTPUT
+            staging_result='failure' >> $GITHUB_OUTPUT 
           fi
           echo $staging_result
 
