@@ -97,9 +97,8 @@ jobs:
   slack_update_result_success_failure:    
     needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one, deploy-status-prod-1, slack_update_pending_apr_prod_two, deploy-to-prod-two, deploy-status-prod-2, set_success_fail_workflow_name]
     if: ${{ always() && success('slack_update_pending_apr_prod_one') }}    
-    uses: Access-Segment/Sitecore/.github/workflows/slack_result.yml@main
+    uses: ./.github/workflows/slack_result.yml
     with:
-      SITE_URL: 'https://jlg.com'
       SUCCESS_CHECK: ${{ needs.deploy-status-prod-1.outputs.output1  == 'success' && needs.deploy-status-prod-2.outputs.output1  == 'success' && 'true' || 'false' }}
       FAILURE_CHECK: ${{ (needs.set_success_fail_workflow_name.outputs.prod_one_result  == 'failure' && needs.deploy-to-prod-one.outputs.reviewed == 'true') || (needs.set_success_fail_workflow_name.outputs.prod_two_result  == 'failure' && needs.deploy-to-prod-two.outputs.reviewed == 'true')  && 'true' || 'false' }}
       # CANCELLED_CHECK: 'false'
