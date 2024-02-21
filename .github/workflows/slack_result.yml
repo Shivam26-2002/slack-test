@@ -18,14 +18,8 @@ on:
 
 jobs:
   Slack_Update_Status:
-    runs-on:
-      group: ADS
+    runs-on: ubuntu-latest
     steps:
-      - name: Something
-        run: |
-          # exit 1
-          echo "Something"
-
       - name: Print inputs
         env:
           SUCCESS_CHECK: ${{ inputs.SUCCESS_CHECK }}
