@@ -31,13 +31,12 @@ jobs:
           echo $staging_result
 
 
-  # slack_update_result_success_failure:    
-  #   needs: [deploy-to-staging, slack_update_in_progress]
-  #   if: ${{ always() && success('slack_update_in_progress') }}    
-  #   uses: Access-Segment/Sitecore/.github/workflows/slack_result.yml@main
-  #   with:
-  #     SITE_URL: 'https://staging.jlg.com'
-  #     SUCCESS_CHECK: ${{ needs.deploy-status-staging.outputs.output1 == 'success' && 'true' || 'false' }}
-  #     FAILURE_CHECK: ${{ needs.deploy-status-staging.outputs.output1 == 'failure' && needs.deploy-to-staging.outputs.reviewed == 'true' && 'true' || 'false' }}
-  #     CANCELLED_CHECK: 'false'
-  #     WORKFLOW_NAME: ${{ github.workflow }}
+  slack_update_result_success_failure:    
+    needs: [deploy-to-staging, slack_update_in_progress]
+    if: ${{ always() && success('slack_update_in_progress') }}    
+    uses: Access-Segment/Sitecore/.github/workflows/slack_result.yml@main
+    with:
+      SUCCESS_CHECK: ${{ needs.deploy-status-staging.outputs.output1 == 'success' && 'true' || 'false' }}
+      FAILURE_CHECK: ${{ needs.deploy-status-staging.outputs.output1 == 'failure' && needs.deploy-to-staging.outputs.reviewed == 'true' && 'true' || 'false' }}
+      # CANCELLED_CHECK: 'false'
+      WORKFLOW_NAME: ${{ github.workflow }}
