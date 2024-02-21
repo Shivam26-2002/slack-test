@@ -92,7 +92,7 @@ jobs:
   slack_update_result_cancelled:
     if: ${{ cancelled() || ( failure('deploy-to-prod-one')  &&  needs.deploy-to-prod-one.outputs.reviewed != 'true') || ( failure('deploy-to-prod-two')  &&  needs.deploy-to-prod-two.outputs.reviewed != 'true') }}    
     needs: [slack_update_pending_apr_prod_one, deploy-to-prod-one,slack_update_pending_apr_prod_two, deploy-to-prod-two, set_success_fail_workflow_name]
-    uses: Access-Segment/Sitecore/.github/workflows/slack_result.yml@main
+    uses: ./.github/workflows/slack_result.yml
     with:
       SITE_URL: 'https://jlg.com'
       SUCCESS_CHECK: 'false'
